@@ -92,28 +92,28 @@ void printList (Node* head){
     cout <<"NULL\n"; 
 }
 
-Node* deleteNodes (Node* head , int m, int n){
-    auto pre = head ;
+
+Node* deleteNodes(Node* head, int m, int n){
+    auto pre = head;
+
     while (pre)
     {
-        for (int i = 0; i < m && pre; i++)
+        for (int i = 0; i < m-1 && pre != NULL; i++)
         {
-            pre = pre -> next;
-        }
-        if (!pre)
-        {
-            return head;
-        }
-        auto cur = pre;
-        for (int i = 0; i < n && cur; i++)
-        {
-            cur = cur -> next;
+            pre = pre-> next;
         }
 
-        pre -> next = cur ? cur -> next : nullptr;
-        pre = pre -> next;
+        auto curr =pre;
+        for (int i = 0; i < n && curr != NULL; i++)
+        {
+            curr = curr->next;
+        }
+        pre->next = curr ? curr->next : nullptr;
+        pre = pre->next;
+        
     }
     return head;
+    
 }
 
 
@@ -132,4 +132,3 @@ int main() {
 
     return 0;
 }
-

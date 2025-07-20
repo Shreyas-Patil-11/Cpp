@@ -92,44 +92,70 @@ void printList (Node* head){
     cout <<"NULL\n"; 
 }
 
-Node* deleteNodes (Node* head , int m, int n){
-    auto pre = head ;
-    while (pre)
+int getSize(Node* head){
+    int sz = 0;
+    while (head != NULL)
     {
-        for (int i = 0; i < m && pre; i++)
-        {
-            pre = pre -> next;
-        }
-        if (!pre)
-        {
-            return head;
-        }
-        auto cur = pre;
-        for (int i = 0; i < n && cur; i++)
-        {
-            cur = cur -> next;
-        }
-
-        pre -> next = cur ? cur -> next : nullptr;
-        pre = pre -> next;
+        head= head->next;
+        sz++;
     }
-    return head;
+    return sz;
 }
 
+Node* getIntersectionNode(Node* headA, Node* headB){
+    int m = getSize(headA);
+    int n = getSize(headB);
+
+    Node* t1 =headA;
+    Node* t2 = headB;
+
+    int diff = 0;
+
+    if (m >= n)
+    {
+        diff = m-n;
+        for (int i = 0; i < diff; i++)
+        {
+            t1 = t1-> next;
+        }
+    }else{
+        diff = n-m;
+        for (int i = 0; i < diff; i++)
+        {
+            t2 = t2-> next;
+        }
+    }
+    
+    while (t1 != NULL && t2!= NULL && t1 != t2)
+    {
+        t1 = t1-> next;
+        t2 = t2-> next;
+    }
+    if (t1 == NULL)
+    {
+        return NULL;
+    }else{
+        return t1;
+    }
+    
+}
 
 int main() {
+    List l1;
+ 
+    l1.push_front(5);
+    l1.push_front(4);
+    
 
-    List ll;
-    ll.push_back(1);
-    ll.push_back(2);
-    ll.push_back(3);
-    ll.push_back(4);
-    ll.push_back(5);
-    ll.push_back(7);
-    ll.push_back(8);
-    printList(ll.head);
-    printList(deleteNodes(ll.head, 2, 2));
+    List l2;
+    l2.push_front(7);
+    l2.push_front(6);
+    l2.push_front(3);
+    l2.push_front(2);
+    l2.push_front(1);
 
+    l1.tail -> next = l2.head -> next -> next -> next;
+    
+    printList(getIntersectionNode(l1.head, l2.head));
     return 0;
 }
-
